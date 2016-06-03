@@ -18,7 +18,7 @@ public class Neuron {
         
         //Preenchendo o Array x com valores de entrada
         for(int i=0; i<10; i++){
-            x.add((double)(i)*0.5);
+            x.add(Math.random()*0.5);
             System.out.println(x.get(i));
         }
         
