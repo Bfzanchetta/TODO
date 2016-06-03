@@ -41,7 +41,7 @@ public class Neuron {
         double desejado = 1.0;
         double alfa = 0.1;
         
-        while(count!=10){
+        while(count!=1000){
             for(int i=0; i<10; i++){
                 for(int j=0; j<10; j++){
                     resultado += (x.get(j) * w.get(j)) + b.get(j);
@@ -54,6 +54,8 @@ public class Neuron {
                 for(int j=0; j<10; j++){
                     w.add(i+1, w.get(i) + (alfa * erro * x.get(j)));
                     b.add(i+1, b.get(i) + alfa * erro);
+                    //Esse alfa esta decaindo por um fator de 2% a cada interacao, taxas de aprendizado constantes nao funcionam bem
+                    alfa = alfa*0.98;
                 }
             }
             for(int i=0; i<10; i++){
