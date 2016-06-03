@@ -18,7 +18,7 @@ public class Neuron {
         
         //Preenchendo o Array x com valores de entrada
         for(int i=0; i<10; i++){
-            x.add((double)(i));
+            x.add((double)(i)*0.5);
             System.out.println(x.get(i));
         }
         
@@ -38,7 +38,7 @@ public class Neuron {
         double resultado = 0.0;
         double erro = 0.0;
         double desejado = 1.0;
-        double alfa = 0.5;
+        double alfa = 0.1;
         
         for(int i=0; i<10; i++){
             for(int j=0; j<10; j++){
