@@ -10,10 +10,10 @@ import java.util.List;
 public class Neuron {
 
     public static void main(String[] args) {
-        List<> x = new ArrayList<>();
-        List<> w = new ArrayList<>();
-        List<> y = new ArrayList<>();
-        List<> b = new ArrayList<>();
+        List<Double> x = new ArrayList<>();
+        List<Double> w = new ArrayList<>();
+        List<Double> y = new ArrayList<>();
+        List<Double> b = new ArrayList<>();
         
         double erro = 0.0;
         double desejado = 1.0;
