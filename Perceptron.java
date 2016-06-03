@@ -46,13 +46,16 @@ public class Neuron {
                 //y.add(i, (x.get(j) * w.get(j)) + b.get(j));
             }
             System.out.println("RESULTADO: "+ resultado);
-            System.out.println("Iteracao ="+ i+ " com valor calculado: "+ y.get(i));
             //Atualiza os pesos e os bias
-            erro = desejado - y.get(i);
+            erro = Math.abs(desejado - resultado);
+            System.out.println("Erro eh: "+erro);
             for(int j=0; j<10; j++){
                 w.add(i+1, w.get(i) + (alfa * erro * x.get(j)));
                 b.add(i+1, b.get(i) + alfa * erro);
             }
+        }
+        for(int i=0; i<10; i++){
+            System.out.println("O peso numero "+i+" eh:"+ w.get(i));
         }
     }
 }
