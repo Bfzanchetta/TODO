@@ -1,5 +1,6 @@
 package neuron;
 
+import static java.lang.Math.exp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,6 +10,7 @@ import java.util.Random;
  * @author Breno Zanchetta
  */
 public class Neuron {
+    boolean treinamento = false;
     
     ArrayList<Double> x = new ArrayList<>(10);
     ArrayList<Double> w = new ArrayList<>(10);
@@ -68,10 +70,15 @@ public class Neuron {
             for(int i=0; i<10; i++){
             System.out.println(y.get(i));
         } 
+    treinamento = true;        
     }
     
     public void gradienteDescendente(){
         
     }
-}
     
+    public double funcaoAtivacao(double x){
+        double f=1/(1+exp(-x));
+        return f;
+    }
+}
