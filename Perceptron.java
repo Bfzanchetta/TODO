@@ -78,7 +78,8 @@ public class Neuron {
     }
     
     public double funcaoAtivacao(double x){
-        double f=1/(1+exp(-x));
+        double alfa = 0.3;
+        double f=1/(1+exp(-alfa*x));
         return f;
     }
 }
