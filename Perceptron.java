@@ -13,7 +13,7 @@ import java.util.Random;
  *
  * @author Breno Zanchetta
  */
-public class Neuron {
+public class Perceptron {
     
     boolean treinamento = false;
     ArrayList<String> x1 = new ArrayList<>(10);
@@ -21,11 +21,17 @@ public class Neuron {
     ArrayList<String> x3 = new ArrayList<>(10);
     ArrayList<String> t = new ArrayList<>();
     
+    ArrayList<Double> w1 = new ArrayList<>(10);
+    ArrayList<Double> w2 = new ArrayList<>(10);
+    ArrayList<Double> w3 = new ArrayList<>(10);
+    
+    ArrayList<Double> b1 = new ArrayList<>(10);
+    ArrayList<Double> b2 = new ArrayList<>(10);
+    ArrayList<Double> b3 = new ArrayList<>(10);
+      
     Double y=0.0;
-    ArrayList<Double> w = new ArrayList<>(10);
-    ArrayList<Double> b = new ArrayList<>(10);
 
-    public Neuron() {
+    public Perceptron() {
     }
     
     public void leEntrada() throws FileNotFoundException, IOException{
@@ -45,36 +51,31 @@ public class Neuron {
     }
     
     public void treinaNeuronio(){
-        int count = 0;
-        //Preenchendo o Array x com valores de entrada
-        //for(int i=0; i<10; i++){
-          //  x.add(Math.random()*0.5);
-            //System.out.println(x.get(i));
-        //}
-            
+        int count = 0;  
         //Preenchendo o Array w com valores aleatorios entre 0 e 1
         for(int i=0; i<10; i++){
-            w.add(Math.random());
-            //System.out.println(w.get(i));
+            w1.add(Math.random());
+            w2.add(Math.random());
+            w3.add(Math.random());
         }
-            
         //Preenchendo o Array de bias com valores aleatorios entre 0 e 0.2
         for(int i=0; i<10; i++){
-            b.add(Math.random()*0.2);
-            //System.out.println(b.get(i));
+            b1.add(Math.random()*0.2);
+            b2.add(Math.random()*0.18);
+            b3.add(Math.random()*0.179);
         }
        
         double resultado = 0.0;
         double erro = 0.0;
         double desejado = 1.0;
-        double alfa = 0.1;
+        double alfa = 0.01;
         
         while(count!=1000){
             for(int i=0; i<10; i++){
                 for(int j=0; j<10; j++){
-                    resultado += (Double.parseDouble(x1.get(j))* w.get(j)) + b.get(j);
-                    resultado += (Double.parseDouble(x2.get(j))* w.get(j)) + b.get(j);
-                    resultado += (Double.parseDouble(x3.get(j))* w.get(j)) + b.get(j);
+                    resultado += (Double.parseDouble(x1.get(j))* w1.get(j)) + b1.get(j);
+                    resultado += (Double.parseDouble(x2.get(j))* w2.get(j)) + b2.get(j);
+                    resultado += (Double.parseDouble(x3.get(j))* w3.get(j)) + b3.get(j);
                     //y.add(i, (x.get(j) * w.get(j)) + b.get(j));
                 }
                 //System.out.println("RESULTADO: "+ resultado);
@@ -107,4 +108,3 @@ public class Neuron {
         return f;
     }
 }
-    
