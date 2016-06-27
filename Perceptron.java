@@ -29,7 +29,7 @@ public class Neuron {
     }
     
     public void leEntrada() throws FileNotFoundException, IOException{
-        FileReader file = new FileReader("/home/nautec/NetBeansProjects/Neuron/src/neuron/entrada.txt");
+        FileReader file = new FileReader("/home/nautec/NetBeansProjects/neuron/src/neuron/entrada.txt");
         BufferedReader lerArq = new BufferedReader(file);
         
         String linha = lerArq.readLine(); // lê a primeira linha
@@ -42,10 +42,6 @@ public class Neuron {
             System.out.printf("%s\n", linha);
             linha = lerArq.readLine(); // lê da segunda até a última linha
         }
-        System.out.println(""+file);
-        
-        
-        
     }
     
     public void treinaNeuronio(){
