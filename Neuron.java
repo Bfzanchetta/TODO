@@ -1,4 +1,4 @@
-package neuron;
+package neuronio;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -24,11 +24,17 @@ public class Neuron {
     public Neuron() {
     }
     
+    public Neuron(ArrayList<Double> x) throws IOException{
+        this.x = x;
+        this.leEntrada();
+    }
+    
     public void leEntrada() throws FileNotFoundException, IOException{
-        FileReader file = new FileReader("/home/nautec/NetBeansProjects/Neuron/src/neuron/entrada.txt");
+        FileReader file = new FileReader("/home/nautec/NetBeansProjects/Neuronio/src/neuronio/entrada.txt");
         BufferedReader lerArq = new BufferedReader(file);
         
         String linha = lerArq.readLine(); // lê a primeira linha
+        
         ArrayList<String> x1 = new ArrayList<>();
         ArrayList<String> x2 = new ArrayList<>();
         ArrayList<String> x3 = new ArrayList<>();
