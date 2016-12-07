@@ -16,10 +16,12 @@ public class Gradiente {
         aux+= Math.sin(x) * Math.cos(y);
         return aux;
     }
-    
-    public double gradiente(){
-        
-        return 0.0;
+   
+    public funcao derivaGradiente(double x, double y){
+        funcao funcao = new funcao();
+        função.recebe({[pow((x-2.0),2)] + [pow((y-3.0),2)] + [Math.sin(x) * Math.cos(y)]});
+        funcao_linha = new funcao();
+        função.derivada(funcao_linha);
+        return funcao;
     }
-    
 }
