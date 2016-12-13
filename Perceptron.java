@@ -1,4 +1,4 @@
-package neuron;
+package teste;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -9,102 +9,116 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- *
- * @author Breno Zanchetta
- */
-public class Perceptron {
-    
-    boolean treinamento = false;
-    ArrayList<String> x1 = new ArrayList<>(10);
-    ArrayList<String> x2 = new ArrayList<>(10);
-    ArrayList<String> x3 = new ArrayList<>(10);
-    ArrayList<String> t = new ArrayList<>();
-    
-    ArrayList<Double> w1 = new ArrayList<>(10);
-    ArrayList<Double> w2 = new ArrayList<>(10);
-    ArrayList<Double> w3 = new ArrayList<>(10);
-    
-    ArrayList<Double> b1 = new ArrayList<>(10);
-    ArrayList<Double> b2 = new ArrayList<>(10);
-    ArrayList<Double> b3 = new ArrayList<>(10);
-      
-    Double y=0.0;
+public class Neuron {
 
-    public Perceptron() {
+    boolean treinamento = false;
+    ArrayList<Double> x1 = new ArrayList<>();
+    ArrayList<Double> x2 = new ArrayList<>();
+    ArrayList<Double> x3 = new ArrayList<>();
+    ArrayList<Double> w1 = new ArrayList<>();
+    ArrayList<Double> w2 = new ArrayList<>();
+    ArrayList<Double> w3 = new ArrayList<>();
+
+    Double y = 0.0;
+
+    ArrayList<Double> b = new ArrayList<>();
+    ArrayList<Double> t = new ArrayList<>();
+
+    public Neuron() {
     }
-    
-    public void leEntrada() throws FileNotFoundException, IOException{
-        FileReader file = new FileReader("/home/nautec/NetBeansProjects/neuron/src/neuron/entrada.txt");
+
+    public Neuron(ArrayList<Double> x) throws IOException {
+        this.leEntrada();
+    }
+
+    public void leEntrada() throws FileNotFoundException, IOException {
+        FileReader file = new FileReader("C:\\Users\\Breno\\Documents\\NetBeansProjects\\Teste\\src\\teste\\entrada.txt");
         BufferedReader lerArq = new BufferedReader(file);
-        
+
         String linha = lerArq.readLine(); // lê a primeira linha
-        
-        while(linha != null) { 
-            x1.add(linha.substring(0, 4));
-            x2.add((linha.substring(4, 9)));
-            x3.add((linha.substring(9, 14)));
-            t.add((linha.substring(14, linha.length())));
-            System.out.printf("%s\n", linha);
+
+        int contador = 0;
+        while (linha != null) {
+            x1.add(contador, Double.parseDouble(linha.substring(0, 4)));
+            x2.add(contador, Double.parseDouble(linha.substring(4, 9)));
+            x3.add(contador, Double.parseDouble(linha.substring(9, 14)));
+            t.add(contador, Double.parseDouble(linha.substring(14, linha.length())));
+            contador++;
             linha = lerArq.readLine(); // lê da segunda até a última linha
         }
     }
-    
-    public void treinaNeuronio(){
-        int count = 0;  
+
+    public void preencheVariaveis() {
         //Preenchendo o Array w com valores aleatorios entre 0 e 1
-        for(int i=0; i<10; i++){
-            w1.add(Math.random());
-            w2.add(Math.random());
-            w3.add(Math.random());
+        for (int i = 0; i < 10; i++) {
+            w1.add(i, Math.random());
+            w2.add(i, Math.random());
+            w3.add(i, Math.random());
         }
+
         //Preenchendo o Array de bias com valores aleatorios entre 0 e 0.2
-        for(int i=0; i<10; i++){
-            b1.add(Math.random()*0.2);
-            b2.add(Math.random()*0.18);
-            b3.add(Math.random()*0.179);
+        for (int i = 0; i < 10; i++) {
+            b.add(i, Math.random() * 0.01);
         }
-       
-        double resultado = 0.0;
+    }
+
+    public void treinaNeuronio() {
+        //inicializa erro, taxa de aprendizado(alfa) e variáveis de controle
+        int count = 0;
+
+        ArrayList<Double> resultado = new ArrayList<>();
         double erro = 0.0;
         double desejado = 1.0;
-        double alfa = 0.01;
-        
-        while(count!=1000){
-            for(int i=0; i<10; i++){
-                for(int j=0; j<10; j++){
-                    resultado += (Double.parseDouble(x1.get(j))* w1.get(j)) + b1.get(j);
-                    resultado += (Double.parseDouble(x2.get(j))* w2.get(j)) + b2.get(j);
-                    resultado += (Double.parseDouble(x3.get(j))* w3.get(j)) + b3.get(j);
-                    //y.add(i, (x.get(j) * w.get(j)) + b.get(j));
+        double alfa = 0.1;
+
+        while (count != 1000) {
+            for (int i = 0; i < 10; i++) {
+                resultado.add(i, (x1.get(i) * w1.get(i)) + (x2.get(i) * w2.get(i)) + (x3.get(i) * w3.get(i)) + b.get(i)) ;
+
+                double retornoAtivacao = this.funcaoAtivacao(resultado.get(i));
+                if (retornoAtivacao == t.get(i)) {
+                    System.out.println("Neurônio Dispara!");    
+                } 
+                else if (retornoAtivacao != t.get(i)) {
+                    double erroLocal = 0.0;
+                    double temp = 0.0;
+                    erroLocal = t.get(i) - retornoAtivacao;
+                    System.out.println("Neurônio Não Dispara!");
+                    System.out.println("Necessita atualizar pesos");
+                    
+                    for(int k=0; k<10; k++){
+                        w1.add(k, w1.get(k) + (alfa*erroLocal*x1.get(k)));
+                        w2.add(k, w2.get(k) + (alfa*erroLocal*x2.get(k)));
+                        w3.add(k, w3.get(k) + (alfa*erroLocal*x3.get(k)));   
+                    }   
                 }
-                //System.out.println("RESULTADO: "+ resultado);
-                //Atualiza os pesos e os bias
-                erro = Math.abs(desejado - resultado);
-                //System.out.println("Erro eh: "+erro);
-                for(int j=0; j<10; j++){
-                    w.add(i+1, w.get(i) + (alfa * erro * x.get(j)));
-                    b.add(i+1, b.get(i) + alfa * erro);
-                    alfa = alfa*0.98;
-                }
+                erro = Math.abs(t.get(i) - resultado.get(i));
             }
-            for(int i=0; i<10; i++){
-                System.out.println("O peso numero "+i+" eh:"+ w.get(i));
-            }
-            y=resultado*0.9;
-        count++;
-        System.out.println(count+" interacao");
+            count++;
+            System.out.println("Iteração = "+count);
         }
-    treinamento = true;        
+        treinamento = true;
+        this.printaPesos();
     }
-    
-    public void gradienteDescendente(){
-        
-    }
-    
-    public double funcaoAtivacao(double x){
+
+    public double funcaoAtivacao(double x) {
         double alfa = 0.3;
-        double f=1/(1+exp(-alfa*x));
+        double f = 1 / (1 + exp(-alfa * x));
         return f;
+    }
+    
+    public void printaPesos(){
+        System.out.println("Vetor Pesos 1:");
+        for(int i=0; i<10; i++){
+            System.out.println(w1.get(i));
+        }
+        System.out.println("Vetor Pesos 1:");
+        for(int i=0; i<10; i++){
+            System.out.println(w2.get(i));
+        }
+        System.out.println("Vetor Pesos 1:");
+        for(int i=0; i<10; i++){
+            System.out.println(w3.get(i));
+        }
     }
 }
